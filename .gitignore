@@ -3,3 +3,6 @@ appsettings.json
 
 # Ignore Program.cs
 Program.cs
+
+# Ignore Visual Studio config folder
+.vs/
