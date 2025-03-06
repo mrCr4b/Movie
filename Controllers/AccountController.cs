@@ -50,5 +50,51 @@ namespace Movie.Controllers
             TempData["Error"] = "Wrong credentials. Try again";
             return View(loginVM);
         }
+
+        public IActionResult Register()
+        {
+            var response = new RegisterViewModel();
+            return View(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel registerVM)
+        {
+            if (!ModelState.IsValid) return View(registerVM);
+            //check email
+            var user = await _userManager.FindByEmailAsync(registerVM.EmailAddress);
+            //email is already used
+            if (user != null)
+            {
+                TempData["Error"] = "Email is already used. Try another email";
+                return View(registerVM);
+            }
+            //register
+            var newUser = new AppUser()
+            {
+                Email = registerVM.EmailAddress,
+                UserName = registerVM.EmailAddress
+            };
+
+            var registerResponse = await _userManager.CreateAsync(newUser, registerVM.Password);
+
+            if (registerResponse.Succeeded)
+            {
+                // Assign role
+                await _userManager.AddToRoleAsync(newUser, "User");
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                // Display errors if registration fails
+                foreach (var error in registerResponse.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                TempData["Error"] = "Registration failed. Please check the errors.";
+                return View(registerVM);
+            }
+
+        }
     }
 }

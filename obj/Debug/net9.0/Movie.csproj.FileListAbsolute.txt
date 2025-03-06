@@ -235,3 +235,4 @@ D:\Documents\Code\C#\Movie\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.Entity
 D:\Documents\Code\C#\Movie\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
 D:\Documents\Code\C#\Movie\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
 D:\Documents\Code\C#\Movie\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+D:\Documents\Code\C#\Movie\obj\Debug\net9.0\Movie.sourcelink.json
