@@ -1,7 +1,12 @@
 ﻿@using Movie.Models.ViewModels
 @model AddRoomViewModel
 
-<form method="post" asp-action="Add" enctype="multipart/form-data">
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="Name">Tên phòng</label>
         <input asp-for="Name" class="form-control" placeholder="Nhập tên phòng">
@@ -12,5 +17,5 @@
         <input asp-for="Capacity" class="form-control" placeholder="Nhập sức chứa">
         <span asp-validation-for="Capacity" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Thêm phòng</button>
+    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
 </form>

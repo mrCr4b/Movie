@@ -1,25 +1,24 @@
-﻿<a class="btn btn-primary" asp-controller="Room" asp-action="Add">Thêm phòng</a>
+﻿@model IEnumerable<Room>
+
+<a class="btn btn-primary" asp-controller="Room" asp-action="Add">Thêm phòng</a>
 
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
+            <th scope="col">Tên phòng</th>
+            <th scope="col">Sức chứa</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>twitter</td>
-        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">
+                    <a asp-controller="Room" asp-action="Edit" asp-route-id="@item.Id">@item.Name</a>
+                </th>
+                <td>@item.Capacity</td>
+            </tr>
+        }
     </tbody>
 </table>
