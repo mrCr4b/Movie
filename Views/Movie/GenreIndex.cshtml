@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Genre>
+
+<a class="btn btn-primary" asp-controller="Movie" asp-action="AddGenre">Thêm thể loại</a>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Tên</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.Name</th>
+            </tr>
+        }
+    </tbody>
+</table>

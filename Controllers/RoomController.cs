@@ -41,13 +41,30 @@ namespace Movie.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var room = await _roomRepository.GetByIdAsync(id);
-            var roomVM = new AddRoomViewModel
+            var roomVM = new EditRoomViewModel
             {
                 Name = room.Name,
                 Capacity = (int)room.Capacity
             };
 
             return View(roomVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditRoomViewModel roomVM)
+        {
+            if(!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit room");
+                return View("Edit", roomVM);
+            }
+            var room = new Room
+            {
+                Id = roomVM.Id,
+                Name = roomVM.Name,
+                Capacity = roomVM.Capacity
+            };
+            _roomRepository.Update(room);
+            return RedirectToAction("Index");
         }
     }
 }
