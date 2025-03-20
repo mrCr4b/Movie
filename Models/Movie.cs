@@ -17,5 +17,7 @@ public partial class Movie
 
     public int? Revenue { get; set; }
 
+    public virtual ICollection<Showtime> Showtimes { get; set; } = new List<Showtime>();
+
     public virtual ICollection<Genre> Genres { get; set; } = new List<Genre>();
 }

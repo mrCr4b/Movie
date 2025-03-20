@@ -18,10 +18,27 @@ namespace Movie.Repositories
             return Save();
         }
 
+        public bool AddMovie(Models.Movie movie)
+        {
+            _context.Add(movie);
+            return Save();
+        }
+
         public async Task<IEnumerable<Genre>> GetAllGenres()
         {
             return await _context.Genres.ToListAsync();
         }
+
+        public async Task<IEnumerable<Models.Movie>> GetAllMovies()
+        {
+            return await _context.Movies.ToListAsync();
+        }
+
+        public async Task<List<Genre>> GetSelectedGenres(List<int> selectedGenres)
+        {
+            return await _context.Genres.Where(g => selectedGenres.Contains(g.Id)).ToListAsync();
+        }
+
         public bool Save()
         {
             var saved = _context.SaveChanges();

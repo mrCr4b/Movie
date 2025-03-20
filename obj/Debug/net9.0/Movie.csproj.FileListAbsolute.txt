@@ -236,3 +236,5 @@ D:\Documents\Code\C#\Movie\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.d
 D:\Documents\Code\C#\Movie\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
 D:\Documents\Code\C#\Movie\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 D:\Documents\Code\C#\Movie\obj\Debug\net9.0\Movie.sourcelink.json
+D:\Documents\Code\C#\Movie\bin\Debug\net9.0\CloudinaryDotNet.dll
+D:\Documents\Code\C#\Movie\bin\Debug\net9.0\Newtonsoft.Json.dll

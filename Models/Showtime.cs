@@ -15,6 +15,8 @@ public partial class Showtime
 
     public int? TicketPrice { get; set; }
 
+    public virtual Movie? Movie { get; set; }
+
     public virtual Room? Room { get; set; }
 
     public virtual ICollection<Seat> Seats { get; set; } = new List<Seat>();

@@ -1,0 +1,63 @@
+﻿@using Movie.Models.ViewModels
+@model AddShowtimeViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<form method="post" asp-action="Add" enctype="multipart/form-data">
+    <!-- Movie Selection -->
+    <div class="dropdown">
+        <button id="movieDropdownButton" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Chọn phim
+        </button>
+        <ul class="dropdown-menu">
+            @foreach (var i in Model.Movies)
+            {
+                <li><a class="dropdown-item" href="#" onclick="selectMovie('@i.Id', '@i.Title')">@i.Title</a></li>
+            }
+        </ul>
+        <input type="hidden" id="SelectedMovieId" name="SelectedMovieId" />
+    </div>
+
+    <!-- Room Selection -->
+    <div class="dropdown">
+        <button id="roomDropdownButton" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Chọn phòng
+        </button>
+        <ul class="dropdown-menu">
+            @foreach (var i in Model.Rooms)
+            {
+                <li><a class="dropdown-item" href="#" onclick="selectRoom('@i.Id', '@i.Name')">@i.Name</a></li>
+            }
+        </ul>
+        <input type="hidden" id="SelectedRoomId" name="SelectedRoomId" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Time">Thời gian</label>
+        <input asp-for="Time" class="form-control" placeholder="Nhập thời gian">
+        <span asp-validation-for="Time" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TicketPrice">Giá vé</label>
+        <input asp-for="TicketPrice" class="form-control" placeholder="Nhập giá vé">
+        <span asp-validation-for="TicketPrice" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Thêm suất chiếu</button>
+</form>
+
+<script>
+    function selectMovie(movieId, movieTitle) {
+        document.getElementById("movieDropdownButton").innerText = movieTitle; // Update button text
+        document.getElementById("SelectedMovieId").value = movieId; // Store selected value
+    }
+
+    function selectRoom(roomId, roomName) {
+        document.getElementById("roomDropdownButton").innerText = roomName; // Update button text
+        document.getElementById("SelectedRoomId").value = roomId; // Store selected value
+    }
+</script>
+

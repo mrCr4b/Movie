@@ -84,6 +84,10 @@ public partial class MovieContext : IdentityDbContext<AppUser>
         {
             entity.Property(e => e.Time).HasColumnType("datetime");
 
+            entity.HasOne(d => d.Movie).WithMany(p => p.Showtimes)
+                .HasForeignKey(d => d.MovieId)
+                .HasConstraintName("FK_Showtimes_Movies");
+
             entity.HasOne(d => d.Room).WithMany(p => p.Showtimes)
                 .HasForeignKey(d => d.RoomId)
                 .HasConstraintName("FK_Showtimes_Rooms");
