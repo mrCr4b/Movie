@@ -7,5 +7,6 @@ namespace Movie.Interfaces
         bool Add(Showtime showtime);
         Task<Showtime> GetLatest();
         Task<IEnumerable<Showtime>> GetAll();
+        Task<Showtime> GetById(int id);
     }
 }

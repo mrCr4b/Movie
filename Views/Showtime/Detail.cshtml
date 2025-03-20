@@ -1,0 +1,22 @@
+﻿@using Movie.Models.ViewModels
+@model IEnumerable<ReserveSeatsViewModel>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<form method="post" asp-action="TakeSeats" asp-controller="Seat" enctype="multipart/form-data">
+<input type="hidden" name="showtimeId" value="@Model.FirstOrDefault()?.ShowtimeId">
+<input type="hidden" name="UserId" value="@Model.FirstOrDefault()?.UserId">
+
+<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+    @foreach (var seat in Model)
+    {
+        <input type="checkbox" class="btn-check" id="seat_@seat.Place" name="SelectedPlaces" value="@seat.Place" autocomplete="off">
+        <label class="btn btn-outline-primary" for="seat_@seat.Place">@seat.Place</label>
+    }
+</div>
+    <button type="submit" class="btn btn-primary">Đặt vé</button>
+</form>
+
+

@@ -3,6 +3,7 @@ using Movie.Interfaces;
 using Movie.Models;
 using Movie.Models.ViewModels;
 
+
 namespace Movie.Controllers
 {
     public class ShowtimeController : Controller
@@ -11,12 +12,14 @@ namespace Movie.Controllers
         private readonly IRoomRepository _roomRepository;
         private readonly IShowtimeRepository _showtimeRepository;
         private readonly ISeatRepository _seatRepository;
-        public ShowtimeController(IMovieRepository movieRepository, IRoomRepository roomRepository, IShowtimeRepository showtimeRepository, ISeatRepository seatRepository)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public ShowtimeController(IMovieRepository movieRepository, IRoomRepository roomRepository, IShowtimeRepository showtimeRepository, ISeatRepository seatRepository, IHttpContextAccessor httpContextAccessor)
         {
             _movieRepository = movieRepository;
             _roomRepository = roomRepository;
             _showtimeRepository = showtimeRepository;
             _seatRepository = seatRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<IActionResult> Index()
         {
@@ -62,10 +65,26 @@ namespace Movie.Controllers
                     };
                     _seatRepository.AddSeatsFromShowtime(seat);
                 }
-                return RedirectToAction("GenreIndex");
+                return RedirectToAction("Index");
             }
 
             return View(showtimeVM);
+        }
+        public async Task<IActionResult> Detail(int id)
+        {
+            var curUserId = _httpContextAccessor.HttpContext.User.GetUserId();
+            var showtime = await _showtimeRepository.GetById(id);
+            IEnumerable<Seat> seats = await _seatRepository.GetSeatsFromShowtime(id);
+            IEnumerable<ReserveSeatsViewModel> seatsVM = seats
+            .Select(s => new ReserveSeatsViewModel
+            {
+                ShowtimeId = s.ShowtimeId,
+                Place = s.Place,
+                State = s.State,
+                UserId = curUserId
+            });
+
+            return View(seatsVM);
         }
     }
 }
