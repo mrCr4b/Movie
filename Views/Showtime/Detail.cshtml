@@ -10,13 +10,29 @@
 <input type="hidden" name="UserId" value="@Model.FirstOrDefault()?.UserId">
 
 <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-    @foreach (var seat in Model)
-    {
-        <input type="checkbox" class="btn-check" id="seat_@seat.Place" name="SelectedPlaces" value="@seat.Place" autocomplete="off">
-        <label class="btn btn-outline-primary" for="seat_@seat.Place">@seat.Place</label>
-    }
+        @foreach (var seat in Model)
+        {
+            bool isReserved = seat.State == "Yes";
+
+            <input type="checkbox"
+                   class="btn-check"
+                   id="seat_@seat.Place"
+                   name="SelectedPlaces"
+                   value="@seat.Place"
+                   autocomplete="off"
+            @(isReserved ? "disabled" : "")>
+
+            <label class="btn @(isReserved ? "btn-danger" : "btn-outline-primary")"
+                   for="seat_@seat.Place">
+                @seat.Place
+            </label>
+        }
+
 </div>
-    <button type="submit" class="btn btn-primary">Đặt vé</button>
+    @if (User.IsInRole("User"))
+    {
+        <button type="submit" class="btn btn-primary">Đặt vé</button>
+    }
 </form>
 
 
