@@ -22,6 +22,22 @@ namespace Movie.Repositories
             return await _context.Seats.Where(s => s.ShowtimeId == showtimeId).ToListAsync();
         }
 
+        public async Task<IEnumerable<Seat>> GetSeatsFromShowtimeAndPlace(int showtimeId, string place)
+        {
+            return await _context.Seats.Where(s => s.ShowtimeId == showtimeId && s.Place == place).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Seat>> GetSeatsFromUserId(string userId)
+        {
+            return await _context.Seats
+                .Where(s => s.UserId == userId)
+                .Include(s => s.Showtime)
+                    .ThenInclude(s => s.Movie)
+                .Include(s => s.Showtime)
+                    .ThenInclude(s => s.Room)
+                .ToListAsync();
+        }
+
         public bool Save()
         {
             var saved = _context.SaveChanges();

@@ -6,9 +6,12 @@
 @{
 }
 
+@if (User.IsInRole("Admin"))
+{
+    <a class="btn btn-primary" asp-controller="Movie" asp-action="Add">Thêm phim</a>
+    <a class="btn btn-primary" asp-controller="Movie" asp-action="GenreIndex">Các thể loại</a>
+}
 
-<a class="btn btn-primary" asp-controller="Movie" asp-action="Add">Thêm phim</a>
-<a class="btn btn-primary" asp-controller="Movie" asp-action="GenreIndex">Các thể loại</a>
 
 <div class="album py-5 bg-light">
     <div class="container">
@@ -22,9 +25,12 @@
                             <p class="card-text">@item.Title</p>
                             <p class="card-text">@item.Description</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a asp-controller="" asp-action="" asp-route-id="" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
-                                </div>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <div class="btn-group">
+                                        <a asp-controller="" asp-action="" asp-route-id="" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>

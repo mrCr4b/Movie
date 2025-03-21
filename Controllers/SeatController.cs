@@ -8,9 +8,11 @@ namespace Movie.Controllers
     public class SeatController : Controller
     {
         private readonly ISeatRepository _seatRepository;
-        public SeatController(ISeatRepository seatRepository)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public SeatController(ISeatRepository seatRepository, IHttpContextAccessor httpContextAccessor)
         {
             _seatRepository = seatRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
         [HttpPost]
         public async Task<IActionResult> TakeSeats(int showtimeId, List<string> SelectedPlaces, string UserId)
@@ -33,9 +35,33 @@ namespace Movie.Controllers
                         _seatRepository.Update(seat); // Cập nhật trực tiếp trên thực thể được theo dõi
                     }
                 }
+
+                // Trừ tiền của user
+
+                // Cộng vào doanh thu của phim
+
                 return RedirectToAction("Index", "Showtime");
             }
             return RedirectToAction("Index", "Movie");
+        }
+        public async Task<IActionResult> SeatsByUser()
+        {
+            var curUserId = _httpContextAccessor.HttpContext.User.GetUserId();
+            IEnumerable<Seat> seats = await _seatRepository.GetSeatsFromUserId(curUserId);
+            return View(seats);
+        }
+        public async Task<IActionResult> CancelSeats(string place, int showtimeId)
+        {
+            IEnumerable<Seat> seats = await _seatRepository.GetSeatsFromShowtimeAndPlace(showtimeId, place);
+            foreach (var seat in seats)
+            {
+                seat.State = "None"; // Hủy ghế đã được đặt
+                seat.UserId = "None"; // Xóa UserId
+                _seatRepository.Update(seat); // Cập nhật trực tiếp trên thực thể được theo dõi
+            }
+            return RedirectToAction("SeatsByUser", "Seat");
+
+            // Trừ bớt doanh thu của phim
         }
     }
 }
